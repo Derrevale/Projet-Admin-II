@@ -1,11 +1,7 @@
-#image de base
-FROM debian:latest
+FROM resystit/bind9
 
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get install -y vim
-RUN apt-get install -y bind9
-RUN apt-get install dnsutils -y
-RUN apt-get install bind9-doc -y
+COPY named.conf /etc/bind/named.conf
+COPY intranet.tl2-5.ephec-ti.be /etc/bind/intranet.tl2-5.ephec-ti.be
+COPY 0.16.172.in-addr.arpa /etc/bind/0.16.172.in-addr.arpa
 
-COPY bind/named.conf.options /etc/bind/named.conf.options
+CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]

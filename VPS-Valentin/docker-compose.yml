@@ -1,0 +1,47 @@
+version: '3'
+
+services: 
+
+    resolver:
+        build: 
+            context: ./Resolver
+            dockerfile: Dockerfile
+        ports: 
+            - "53:53/tcp"
+            - "53:53/udp"
+        networks: 
+            local_net:
+                ipv4_address: 172.16.1.4
+        volumes:
+            - ./Resolver/named.conf:/etc/bind/named.conf
+        container_name: resolver
+
+
+    soa_interne:
+        build: 
+            context: ./SOA_int 
+            dockerfile: Dockerfile
+        
+        networks: 
+            local_net:
+                ipv4_address: 172.16.1.3
+        volumes:
+            - ./SOA_int/named.conf:/etc/bind/named.conf
+            - ./SOA_int/intranet.tl2-5.ephec-ti.be:/etc/bind/intranet.tl2-5.ephec-ti.be
+            - ./SOA_int/0.16.172.in-addr.arpa:/etc/bind/0.16.172.in-addr.arpa
+        container_name: soa_interne
+
+
+
+##############################################
+##       Docker Networks Configuration      ##
+##############################################
+
+networks:
+
+    local_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.1.0/24
+                  gateway:  172.16.1.1
