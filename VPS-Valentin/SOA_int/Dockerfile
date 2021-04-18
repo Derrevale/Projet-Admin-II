@@ -1,5 +1,6 @@
 #image de base
-FROM ubuntu
+FROM debian:latest
+
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y vim
