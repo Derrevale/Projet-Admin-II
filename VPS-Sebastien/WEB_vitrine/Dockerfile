@@ -12,9 +12,9 @@ WORKDIR /var/www/html
 
 # ADD . /var/www/html
 
-COPY index.html /var/www/html/index.html
-COPY index.css /var/www/html/index.css
-COPY /phpFiles/ /var/www/html/phpFiles/
+COPY www/index.html /var/www/html/index.html
+COPY www/index.css /var/www/html/index.css
+COPY www/phpFiles/ /var/www/html/phpFiles/
 
 ENTRYPOINT [ "/usr/sbin/apache2ctl" ]
 CMD ["-D", "FOREGROUND"]
