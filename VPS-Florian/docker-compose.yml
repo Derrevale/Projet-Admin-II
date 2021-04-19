@@ -1,0 +1,36 @@
+version: '3'
+
+##############################################
+##       Docker Services Configuration      ##
+##############################################
+
+services:
+
+  soa-ext:
+    build: 
+      context: ./SOA_ext
+      dockerfile: Dockerfile
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    networks:
+      dmz_net:
+          ipv4_address: 172.16.0.2
+    volumes:
+      - ./SOA_ext/named.conf:/etc/bind/named.conf
+      - ./SOA_ext/tl2-5.ephec-ti.be:/etc/bind/tl2-5.ephec-ti.be
+    container_name: soa-ext
+
+
+##############################################
+##       Docker Networks Configuration      ##
+##############################################
+
+networks:
+
+  dmz_net:
+    ipam:
+        driver: default
+        config:
+            - subnet: 172.16.0.0/24
+              gateway: 172.16.0.1

@@ -31,7 +31,13 @@ services:
             - ./SOA_int/0.16.172.in-addr.arpa:/etc/bind/0.16.172.in-addr.arpa
         container_name: soa_interne
 
-
+    user_administration:
+        build: ./User
+        networks:
+            local_net:
+                ipv4_address: 172.16.1.99
+        hostname: tl2-5
+        container_name: user_administration
 
 ##############################################
 ##       Docker Networks Configuration      ##
@@ -45,3 +51,19 @@ networks:
             config:
                 - subnet: 172.16.1.0/24
                   gateway:  172.16.1.1
+
+    administratif_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.2.0/24
+                  gateway:  172.16.2.1
+
+    networks:
+
+        dmz_net:
+          ipam:
+              driver: default
+              config:
+                  - subnet: 172.16.0.0/24
+                    gateway: 172.16.0.1
