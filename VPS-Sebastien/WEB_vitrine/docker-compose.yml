@@ -1,0 +1,27 @@
+version: '3.1'
+
+services: 
+  web:
+    container_name: container-apache-woodytoys
+    build : 
+      context: ./
+      dockerfile: www/Dockerfile
+    ports:
+        - 8080:80
+    links: 
+        - db
+  db:
+    container_name: container-mysql-woodytoysdb
+    build:
+      context: ./DB/mysql
+      dockerfile: Dockerfile
+    environment: 
+      MYSQL_DATABASE : woodytoys_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'user123'
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./DB/db_woodytoys/db-data:/docker-entrypoint-initdb.d
