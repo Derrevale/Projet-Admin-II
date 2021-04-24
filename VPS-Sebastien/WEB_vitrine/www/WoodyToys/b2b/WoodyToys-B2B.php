@@ -14,7 +14,7 @@
 <?php 
 	$langage_programmation = "PHP";
 	echo "J'écris en " . $langage_programmation . " !";
-	$bdd = new PDO('mysql:host=192.168.1.30;dbname=test2;charset=utf8', 'root', 'root');
+	$bdd = new PDO('mysql:host=192.168.1.30;dbname=woodytoys_db;charset=utf8', 'root', 'root');
 	$reponse = $bdd->query("SELECT * FROM Produits");
 
 	while($donneesProduits = $reponse->fetch())

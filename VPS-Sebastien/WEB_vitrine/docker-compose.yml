@@ -7,9 +7,13 @@ services:
       context: ./
       dockerfile: www/Dockerfile
     ports:
-        - 8080:80
+        - 80:80
     links: 
         - db
+    extra_hosts:
+      - "b2b.l2-5.ephec-ti.be:0.0.0.0"
+    volumes:
+      - config/sites-available/WoodyToys.conf-B2B.conf
   db:
     container_name: container-mysql-woodytoysdb
     build:
