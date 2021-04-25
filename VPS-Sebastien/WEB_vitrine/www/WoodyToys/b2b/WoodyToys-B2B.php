@@ -14,7 +14,7 @@
 </form>
 
 <?php 
-	$bdd = new PDO('mysql:host=192.168.1.30;dbname=woodytoys_db;charset=utf8', 'root', 'root');
+	$bdd = new PDO('mysql:host=135.125.101.237;dbname=woodytoys_db;charset=utf8', 'root', 'root');
 	$reponse = $bdd->query("SELECT * FROM Produits");
 
 	while($donneesProduits = $reponse->fetch())
