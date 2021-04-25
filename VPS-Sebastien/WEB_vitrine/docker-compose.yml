@@ -10,8 +10,6 @@ services:
         - 80:80
     links: 
         - db
-    extra_hosts:
-      - "b2b.l2-5.ephec-ti.be:0.0.0.0"
     volumes:
       - config/sites-available/WoodyToys.conf-B2B.conf
   db:
