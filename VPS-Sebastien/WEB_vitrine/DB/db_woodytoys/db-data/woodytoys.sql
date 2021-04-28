@@ -1,11 +1,12 @@
 CREATE TABLE Produits (
-    prodId integer,
-    nomProduit varchar(255)
+    prodId INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nomProduit varchar(255) NOT NULL,
+    prodPrix decimal(6,2) NOT NULL
 );
 
-INSERT INTO Produits (prodId, nomProduit) 
-VALUES (1, 'table de ping pong'),
-        (2, 'petites voitures'),
-        (3, 'chaise à bascule'),
-        (4, 'ballon de football'),
-        (4, 'Toupies');
+INSERT INTO Produits (nomProduit, prodPrix) 
+VALUES ('table de ping pong', 5),
+        ('petites voitures', 6.50),
+        ('chaise à bascule', 25),
+        ('ballon de football', 10),
+        ('Toupies', 3.25);

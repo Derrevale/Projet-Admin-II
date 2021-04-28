@@ -15,6 +15,7 @@ COPY www/WoodyToys/vitrine/vitrine_errors.log /var/log/apache2/WoodyToys_error_l
 COPY www/WoodyToys/vitrine/index.html /var/www/html/WoodyToys/vitrine/index.html
 COPY www/WoodyToys/vitrine/WoodyToys-vitrine.css /var/www/html/WoodyToys/vitrine/css/WoodyToys-vitrine.css
 COPY www/WoodyToys/b2b/WoodyToys-B2B.php /var/www/html/WoodyToys/b2b/index.php
+COPY www/WoodyToys/b2b/css/ /var/www/html/WoodyToys/b2b/css/
 
 #Copies des fichiers de configurations des virtuals hosts
 COPY config/sites-available/WoodyToys-vitrine.conf /etc/apache2/sites-available/WoodyToys-vitrine.conf
