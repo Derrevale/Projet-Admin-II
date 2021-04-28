@@ -1,5 +1,5 @@
 #ubuntu dernière version
-FROM ubuntu:latest
+FROM debian:latest
 
 #Installation de bind9 et des outils nécéssaire 
 RUN apt update && apt upgrade -y && apt install bind9 bind9utils dnsutils net-tools -y
