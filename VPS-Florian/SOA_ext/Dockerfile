@@ -1,6 +1,15 @@
-FROM resystit/bind9
+#ubuntu dernière version
+FROM ubuntu:latest
 
-COPY named.conf /etc/bind/named.conf
-COPY tl2-5.ephec-ti.be /etc/bind/tl2-5.ephec-ti.be
+#Installation de bind9 et des outils nécéssaire 
+RUN apt update && apt upgrade -y && apt install bind9 bind9utils dnsutils net-tools -y
 
-CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
+COPY named.conf /etc/bind/
+
+COPY l2-5.ephec-ti.be /etc/bind/zones/
+
+EXPOSE 53/udp
+EXPOSE 53/tcp
+
+#Commande réalisé au démarage du conteneur
+CMD ["named", "-c", "/etc/bind/named.conf", "-g"]

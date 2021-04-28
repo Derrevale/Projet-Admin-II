@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 ##############################################
 ##       Docker Services Configuration      ##
@@ -18,7 +18,7 @@ services:
           ipv4_address: 172.16.0.2
     volumes:
       - ./SOA_ext/named.conf:/etc/bind/named.conf
-      - ./SOA_ext/tl2-5.ephec-ti.be:/etc/bind/tl2-5.ephec-ti.be
+      - ./SOA_ext/l2-5.ephec-ti.be:/etc/bind/l2-5.ephec-ti.be
     container_name: soa-ext
 
 
