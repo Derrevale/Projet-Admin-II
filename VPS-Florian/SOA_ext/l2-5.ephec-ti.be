@@ -19,7 +19,7 @@ www					IN		A		135.125.101.237		; Web serveur client (VPS Sebastien)
 mail				IN		A		135.125.101.234	; Serveur mail (VPS Florian)
 @					IN		MX		10	mail.l2-5.ephec-ti.be.
 
-voip		IN		A		135.125.101.237		; Serveur de la VoIP, VPS de Lucas
+voip		IN		A		135.125.101.237		; Serveur de la VoIP (VPS Sebastien)
 
 _sip._tcp		86400		IN	SRV		10		100		5060		voip.l2-5.ephec-ti.be.
 _sip._udp		86400		IN	SRV		10		100		5060		voip.l2-5.ephec-ti.be.
