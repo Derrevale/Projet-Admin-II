@@ -1,6 +1,6 @@
-$ORIGIN intranet.tl2-5.ephec-ti.be.
+$ORIGIN intranet.l2-5.ephec-ti.be.
 $TTL 604800
-@       IN      SOA     ns.intranet.tl2-5.ephec-ti.be. v.derreumaux.students.ephec.be. (
+@       IN      SOA     ns.intranet.l2-5.ephec-ti.be. v.derreumaux.students.ephec.be. (
                         1           ; Serial
                         604800      ; Refresh
                         86400       ; Retry
@@ -8,7 +8,7 @@ $TTL 604800
                         604800 )    ; Negative Cache TTL
 ;
 ; name servers => RR de type NS
-            IN      NS      ns.intranet.tl2-5.ephec-ti.be.
+            IN      NS      ns.intranet.l2-5.ephec-ti.be.
 
 ; name servers => RR de type A
 ns          IN      A       172.16.1.3

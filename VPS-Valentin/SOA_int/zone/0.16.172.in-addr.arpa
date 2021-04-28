@@ -1,6 +1,6 @@
 $ORIGIN 0.16.172.in-addr.arpa.
 $TTL 604800
-@       IN      SOA     ns.intranet.tl2-5.ephec-ti.be. v.derreumaux.students.ephec.be. (
+@       IN      SOA     ns.intranet.l2-5.ephec-ti.be. v.derreumaux.students.ephec.be. (
                         1           ; Serial
                         604800      ; Refresh
                         86400       ; Retry
@@ -8,11 +8,11 @@ $TTL 604800
                         604800 )    ; Negative Cache TTL
 ;
 ; name servers => RR de type NS
-@               IN      NS      ns.intranet.tl2-5.ephec-ti.be.
+@               IN      NS      ns.intranet.l2-5.ephec-ti.be.
 
 ; name servers => RR de type PTR
-3               IN      PTR     ns.intranet.tl2-5.ephec-ti.be.
+3               IN      PTR     ns.intranet.l2-5.ephec-ti.be.
 
 ; services web
-4               IN      PTR     erp.intranet.tl2-5.ephec-ti.be.
-5               IN      PTR     mysql.intranet.tl2-5.ephec-ti.be.
+4               IN      PTR     erp.intranet.l2-5.ephec-ti.be.
+5               IN      PTR     mysql.intranet.l2-5.ephec-ti.be.

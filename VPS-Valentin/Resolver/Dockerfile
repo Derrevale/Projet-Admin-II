@@ -1,3 +1,8 @@
-FROM resystit/bind9
+FROM ubuntu:latest
+
+RUN apt update && apt upgrade -y && apt install bind9 bind9utils -y && apt-get update && apt-get install iputils-ping
+RUN apt-get install vim -y
+
+WORKDIR /etc/bind
+
 COPY named.conf /etc/bind/named.conf
-CMD ["named", "-c", "/etc/bind/named.conf", "-g", "-u", "named"]
