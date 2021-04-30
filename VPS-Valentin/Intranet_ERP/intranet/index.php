@@ -10,8 +10,8 @@
 <body>
  
     <form method="POST" action="?"> 
-	<input type="search" placeholder="Fournisseur" name="nomFournisseur">
-	<input type="search" placeholder="Localite" name="localiteFournisseur">
+	<input type="search" placeholder="Fournisseur" name="entrepriseNom">
+	<input type="search" placeholder="Localite" name="entrepriseLocalite">
     <input type="search" placeholder="Telephone" name="entrepriseTel">
     <input type="search" placeholder="Email" name="entrepriseMail">
 	<button type="submit"> Enregistrer le fournisseur </button>
