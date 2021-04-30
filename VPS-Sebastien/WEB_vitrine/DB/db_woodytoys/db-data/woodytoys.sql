@@ -10,3 +10,15 @@ VALUES ('table de ping pong', 5),
         ('chaise à bascule', 25),
         ('ballon de football', 10),
         ('Toupies', 3.25);
+
+CREATE TABLE Fournisseurs (
+    nomFournisseur varchar(255) NOT NULL,
+    localiteFournisseur varchar(255) NOT NULL,
+    entrepriseTel varchar(25) NOT NULL,
+    entrepriseMail varchar(255) NOT NULL
+);
+
+INSERT INTO Fournisseurs(
+    ('Wathelet', 'Charleroi', '071 15 17 29', 'contact@wathelet.be')
+    ('Binou', 'Lille', '071 59 87 28', 'contact@binou.be')
+)
