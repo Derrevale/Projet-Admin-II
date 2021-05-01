@@ -6,3 +6,5 @@ RUN apt-get install vim -y
 WORKDIR /etc/bind
 
 COPY named.conf /etc/bind/named.conf
+
+CMD tail -f /dev/null

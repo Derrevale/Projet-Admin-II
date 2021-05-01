@@ -16,6 +16,18 @@ services:
             - ./Resolver/named.conf:/etc/bind/named.conf
         container_name: resolver
 
+    intranet:
+        build:
+            context: ./Intranet_ERP
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        networks:
+            local_net:
+                ipv4_address: 172.16.1.2
+        container_name: intranet_ERP
+
+
 
     soa_interne:
         build: 
@@ -39,6 +51,42 @@ services:
         hostname: l2-5
         container_name: user_administration
 
+    administration:
+        build: 
+            context: ./Intranet_ERP/Docker-administration
+            dockerfile: Dockerfile
+        networks:
+            administration_net:
+                ipv4_address: 172.16.4.2
+        container_name: user_admin1
+
+    commerciaux:
+        build: 
+            context: ./Intranet_ERP/Docker-commerciaux
+            dockerfile: Dockerfile
+        networks:
+            commerciaux_net:
+                ipv4_address: 172.16.3.2
+        container_name: user_commerciaux1
+
+    direction:
+        build: 
+            context: ./Intranet_ERP/Docker-direction
+            dockerfile: Dockerfile
+        networks:
+            direction_net:
+                ipv4_address: 172.16.2.2
+        container_name: user_direction1
+
+    atelier:
+        build: 
+            context: ./Intranet_ERP/Docker-atelier
+            dockerfile: Dockerfile
+        networks:
+            atelier_net:
+                ipv4_address: 172.16.5.2
+        container_name: user_atelier1
+
 ##############################################
 ##       Docker Networks Configuration      ##
 ##############################################
@@ -52,12 +100,33 @@ networks:
                 - subnet: 172.16.1.0/24
                   gateway:  172.16.1.1
 
-    administratif_net:
+    direction_net:
         ipam:
             driver: default
             config:
                 - subnet: 172.16.2.0/24
                   gateway:  172.16.2.1
+
+    commerciaux_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.3.0/24
+                  gateway:  172.16.3.1
+
+    administration_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.4.0/24
+                  gateway: 172.16.4.1
+
+    atelier_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.5.0/24
+                  gateway: 172.16.5.1
 
     dmz_net:
         ipam:

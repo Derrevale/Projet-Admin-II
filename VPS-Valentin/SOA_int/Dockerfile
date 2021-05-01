@@ -9,3 +9,5 @@ COPY named.conf /etc/bind/named.conf
 
 COPY zones/intranet.l2-5.ephec-ti.be /etc/bind/zones/intranet.l2-5.ephec-ti.be
 COPY zones/0.16.172.in-addr.arpa /etc/bind/zones/0.16.172.in-addr.arpa
+
+CMD tail -f /dev/null
