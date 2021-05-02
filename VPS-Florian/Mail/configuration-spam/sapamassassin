@@ -8,6 +8,7 @@
 # not used. Instead, enable spamd by issuing:
 # systemctl enable spamassassin.service
 # Change to "1" to enable spamd on systems using sysvinit:
+#ACTIVATION DE SPAMASSASSIN
 ENABLED=1
 
 # DOSSIER DES LOGS
@@ -34,5 +35,5 @@ PIDFILE="/var/run/spamd.pid"
 
 # Cronjob
 # Set to anything but 0 to enable the cron job to automatically update
-# spamassassin's rules on a nightly basis
+# ACTIVATION AU DEMARAGE
 CRON=1
