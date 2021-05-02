@@ -1,5 +1,5 @@
 $ ORIGIN l2-5.ephec-ti.be.
-$TTL 604800
+$TTL 86400
 @       IN      SOA     ns.l2-5.ephec-ti.be. root.l2-5.ephec-ti.be. (
                         1           ; Serial
                         604800      ; Refresh
