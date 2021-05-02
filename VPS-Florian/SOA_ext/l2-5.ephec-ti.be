@@ -1,4 +1,4 @@
-$ ORIGIN l2-5.ephec-ti.be.
+$ORIGIN l2-5.ephec-ti.be.
 $TTL 86400
 @       IN      SOA     ns.l2-5.ephec-ti.be. root.l2-5.ephec-ti.be. (
                         1           ; Serial
@@ -7,19 +7,22 @@ $TTL 86400
                         2419200     ; Expire
                         604800 )    ; Negative Cache TTL
 
-;Attribution du "name server" (NS)
-@   	IN      NS      ns.l2-5.ephec-ti.be.
-ns.l2-5.ephec-ti.be.   	IN      A       135.125.101.234				; VPS Florian
+; Configuration du name serveur
+            IN      NS      ns.l2-5.ephec-ti.be.
+            IN      MX  10  mail
+ns          IN      A       135.125.101.234 ;VPS Florian
 
-;Attribution des nom de domaine pour les sites web publiques
-b2b					IN 		A		135.125.101.237		; Web serveur revendeur (VPS Sebastien)
-www					IN		A		135.125.101.237		; Web serveur client (VPS Sebastien)
 
-;Attribution du nom de domaine pour le mail
-mail				IN		A		135.125.101.234	; Serveur mail (VPS Florian)
-@					IN		MX		10	mail.l2-5.ephec-ti.be.
+;
+b2b         IN      A       135.125.101.237
+www         IN      A       135.125.101.237
 
-voip		IN		A		135.125.101.237		; Serveur de la VoIP (VPS Sebastien)
+; Mail
+mail        IN      A       135.125.101.234; VPS Sebastien
+smtp        IN      CNAME   mail
 
-_sip._tcp		86400		IN	SRV		10		100		5060		voip.l2-5.ephec-ti.be.
-_sip._udp		86400		IN	SRV		10		100		5060		voip.l2-5.ephec-ti.be.
+
+; VoIP
+_sip._udp	SRV     0       0       5060        sip 
+_sip._tcp 	SRV     0       0       5060        sip
+sip 		IN	    A	    135.125.101.237	
