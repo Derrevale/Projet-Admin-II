@@ -21,7 +21,25 @@ services:
       - ./SOA_ext/l2-5.ephec-ti.be:/etc/bind/l2-5.ephec-ti.be
     container_name: soa-ext
 
+  mail:
+      build: 
+      context: ./Mail
+      dockerfile: Dockerfile
+    ports:
+      - "25:25"
+      - "143:143"
+      - "465:465"
+      - "587:587"
+      - "993:993"
+      networks:
+        dmz_net:
+            ipv4_address: 172.16.0.3
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+      hostname: mail
+      container_name: mail
 
+      
 ##############################################
 ##       Docker Networks Configuration      ##
 ##############################################
