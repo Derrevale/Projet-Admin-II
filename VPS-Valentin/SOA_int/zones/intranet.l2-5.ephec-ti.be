@@ -16,3 +16,4 @@ ns          IN      A       172.16.1.3
 ; services web
 erp         IN      A       172.16.1.2
 mysql       IN      A       172.16.1.1
+resolveur   IN      A       172.16.1.4

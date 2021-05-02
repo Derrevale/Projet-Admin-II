@@ -8,7 +8,7 @@
     <title>WoodyToys</title>
 </head>
 <body>
- 
+	<!-- formulaire -->
     <form method="POST" action=""> 
 	<input type="search" placeholder="Fournisseur" name="entrepriseNom">
 	<input type="search" placeholder="Localite" name="entrepriseLocalite">

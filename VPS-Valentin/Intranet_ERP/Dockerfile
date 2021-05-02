@@ -3,6 +3,7 @@ FROM php:8.0-apache
 RUN apt-get update -y
 RUN apt-get install -y vim nano
 RUN apt-get install -y iputils-ping
+RUN apt-get install -y dnsutils
 RUN apt-get install -y lynx
 RUN apt-get install net-tools
 RUN docker-php-ext-install mysqli pdo pdo_mysql
