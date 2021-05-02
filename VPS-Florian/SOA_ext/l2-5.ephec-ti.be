@@ -1,5 +1,5 @@
 $ ORIGIN l2-5.ephec-ti.be.
-$ $TTL 604800
+$TTL 604800
 @       IN      SOA     ns.l2-5.ephec-ti.be. root.l2-5.ephec-ti.be. (
                         1           ; Serial
                         604800      ; Refresh
@@ -8,7 +8,7 @@ $ $TTL 604800
                         604800 )    ; Negative Cache TTL
 
 ;Attribution du "name server" (NS)
-l2-5.ephec-ti.be.   	IN      NS      ns.l2-5.ephec-ti.be.
+@   	IN      NS      ns.l2-5.ephec-ti.be.
 ns.l2-5.ephec-ti.be.   	IN      A       135.125.101.234				; VPS Florian
 
 ;Attribution des nom de domaine pour les sites web publiques
