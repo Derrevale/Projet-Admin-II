@@ -1,29 +1,50 @@
-version: '3.1'
+version: '2'
 
-services: 
+services:
   web:
+    # Attribue un nom au container du serveur WEB apache
     container_name: container-apache-woodytoys
-    build : 
+    build :
+      # directives permettant de pouvoir indiquer au docker-compose où chercher le dockerfile pour l'image du serveur WEB apache
       context: ./
       dockerfile: www/Dockerfile
     ports:
-        - 80:80
-    links: 
-        - db
+      # Attribue les ports 80 pour le container WEB
+      - 80:80
+    networks:
+      # Attribue une adresse IP au container WEB appartenant à la zone DMZ
+      dmz_net:
+        ipv4_address: 172.16.0.5
+    links:
+      - db
     volumes:
       - config/sites-available/WoodyToys.conf-B2B.conf
   db:
+    # Attribue un nom au container de la base de données MySQL
     container_name: container-mysql-woodytoysdb
     build:
+      # directives permettant de pouvoir indiquer au docker-compose où chercher le dockerfile pour l'image de la base de données mysql
       context: ./DB/mysql
       dockerfile: Dockerfile
-    environment: 
+    environment:
+      # Créé une base de données, attribue un mot de passe pour le root et utilisateur admin nouvellement créé
       MYSQL_DATABASE : woodytoys_db
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: 'admin'
       MYSQL_PASSWORD: 'user123'
     restart: always
+    # Attribution des ports 3306 pour le service MySQL
     ports:
       - "3306:3306"
     volumes:
+      # Commande permettant de pouvoir insérer les données dans la DB depuis un fichier .sql
       - ./DB/db_woodytoys/db-data:/docker-entrypoint-initdb.d
+
+#Création du réseau de la zone DMZ, on y attribue son sous-réseau et sa passerelle par défaut
+networks:
+  dmz_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1

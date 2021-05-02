@@ -5,7 +5,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN apt-get -y update
 RUN apt-get install -y vim
-RUN apt-get install -y net-tools
+RUN apt-get install -y net-tools bind9 bind9utils dnsutils iputils-ping
 
 #Créé deux emplacements différents pour les logs d'erreurs liés aux deux virtual hosts (b2b et vitrine)
 COPY www/WoodyToys/b2b/b2b_errors.log /var/log/apache2/WoodyToys_error_logs/b2b/b2b_errors.log
