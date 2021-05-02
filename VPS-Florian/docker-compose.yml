@@ -7,7 +7,7 @@ version: '2'
 services:
 
   soa-ext:
-    build: 
+    build:
       context: ./SOA_ext
       dockerfile: Dockerfile
     ports:
@@ -15,14 +15,14 @@ services:
       - "53:53/udp"
     networks:
       dmz_net:
-          ipv4_address: 172.16.0.2
+        ipv4_address: 172.16.0.2
     volumes:
       - ./SOA_ext/named.conf:/etc/bind/named.conf
       - ./SOA_ext/l2-5.ephec-ti.be:/etc/bind/l2-5.ephec-ti.be
     container_name: soa-ext
 
   mail:
-      build: 
+    build:
       context: ./Mail
       dockerfile: Dockerfile
     ports:
@@ -31,15 +31,15 @@ services:
       - "465:465"
       - "587:587"
       - "993:993"
-      networks:
-        dmz_net:
-            ipv4_address: 172.16.0.3
-      environment:
-        MYSQL_ROOT_PASSWORD: root
-      hostname: mail
-      container_name: mail
+    networks:
+      dmz_net:
+         ipv4_address: 172.16.0.3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    hostname: mail
+    container_name: mail
 
-      
+
 ##############################################
 ##       Docker Networks Configuration      ##
 ##############################################
@@ -48,7 +48,7 @@ networks:
 
   dmz_net:
     ipam:
-        driver: default
-        config:
-            - subnet: 172.16.0.0/24
-            - gateway: 172.16.0.1
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.1

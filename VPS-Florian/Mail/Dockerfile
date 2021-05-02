@@ -32,8 +32,6 @@ COPY configuration-postfix/master.cf /etc/postfix/master.cf
 COPY configuration-postfix/generic /etc/postfix/generic
 COPY configuration-postfix/mysql-virtual-mailbox-domains.cf /etc/postfix/mysql-virtual-mailbox-domains.cf
 COPY configuration-postfix/mysql-virtual-mailbox-maps.cf /etc/postfix/mysql-virtual-mailbox-maps.cf
-COPY configuration-postfix/vmailbox /etc/postfix/vmailbox
-RUN postmap /etc/postfix/vmailbox
 RUN postmap /etc/postfix/generic
 
 #Installation de Dovecot (Pour IMAP)
