@@ -6,7 +6,7 @@ RUN apt update && apt upgrade -y && apt install bind9 bind9utils dnsutils net-to
 
 COPY named.conf /etc/bind/
 
-COPY l2-5.ephec-ti.be /etc/bind/zones/
+COPY db.l2-5.ephec-ti.be /etc/bind/zones/
 
 EXPOSE 53/udp
 EXPOSE 53/tcp
