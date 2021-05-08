@@ -18,6 +18,7 @@ COPY www/WoodyToys/b2b/WoodyToys-B2B.php /var/www/html/WoodyToys/b2b/index.php
 COPY www/WoodyToys/b2b/css/ /var/www/html/WoodyToys/b2b/css/
 
 #Copies des fichiers de configurations des virtuals hosts
+COPY config/apache2.conf /etc/apache2/apache2.conf
 COPY config/sites-available/WoodyToys-vitrine.conf /etc/apache2/sites-available/WoodyToys-vitrine.conf
 COPY config/sites-available/WoodyToys-B2B.conf /etc/apache2/sites-available/WoodyToys-B2B.conf
 

@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2'
 
 services:
   web:
@@ -29,9 +29,9 @@ services:
     environment:
       # Créé une base de données, attribue un mot de passe pour le root et utilisateur admin nouvellement créé
       MYSQL_DATABASE : woodytoys_db
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: [ mot de passe root ]
       MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'user123'
+      MYSQL_PASSWORD: [ mot de passe utilisateur ]
     restart: always
     # Attribution des ports 3306 pour le service MySQL
     ports:
