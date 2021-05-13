@@ -1,10 +1,10 @@
 FROM debian
 
 RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get install vim nano -y
+RUN apt-get install vim nano dnsutils -y
 RUN apt-get install wget -y   
 RUN apt-get install make -y 
-RUN apt-get -y install git curl libnewt-dev libssl-dev libncurses5-dev subversion  libsqlite3-dev build-essential libjansson-dev libxml2-dev  uuid-dev libedit-dev libtool
+RUN apt-get -y install git curl libnewt-dev libssl-dev libncurses5-dev subversion  libsqlite3-dev build-essential libjansson-dev libxml2-dev  uuid-dev libedit-dev libtool net-tools
 
 RUN mkdir /usr/src/asteriskSource 
 RUN cd /usr/src/asteriskSource
@@ -24,7 +24,11 @@ RUN rm asterisk-18-current.tar.gz -f
 RUN rm dahdi-linux-current.tar.gz -f
 RUN rm libpri-current.tar.gz -f
 
-RUN cd asterisk-18.4.0 && ./configure && make && make install && make samples
+RUN cd asterisk-18.4.0 && ./configure && make && make install && make samples && make config
+
+COPY config/asterisk.conf /etc/asterisk/asterisk.conf
+COPY config/sip.conf /etc/asterisk/sip.conf
+COPY config/extensions.conf /etc/asterisk/extensions.conf
 
 EXPOSE 5060/tcp 5060/udp
 
