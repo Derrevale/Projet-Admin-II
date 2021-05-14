@@ -34,9 +34,6 @@ services:
             context: ./SOA_int 
             dockerfile: Dockerfile
 
-        ports: 
-            - "53:53/tcp"
-            - "53:53/udp"
         
         networks: 
             local_net:
