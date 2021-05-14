@@ -1,0 +1,61 @@
+#!/bin/bash
+# Script de supression d'utilisateur 
+
+
+R="\033[0;31m"
+B="\033[0;34m"
+O="\033[0;33m"
+M="\033[0;95m"
+N="\033[0m"
+
+# SQL affiche les id et emails de la db
+output=$(mysql -u root -t <<MY_QUERY
+USE maildb
+SELECT id, email AS "Adresse Mail" FROM virtual_users
+ORDER BY id
+MY_QUERY
+)
+printf "$O$output$N\n"
+
+# SQL stocke les ID dans le fichier id.txt
+id=$(mysql -u root -N <<MY_QUERY
+USE maildb
+SELECT id FROM virtual_users
+ORDER BY id
+MY_QUERY
+)
+echo "$id" > id.txt
+
+# Demande a l'utilisateur le mail a supprimer
+echo "Email a supprimer (Choisir un numéro différent de 0) ?"
+read a
+
+# Verifie si l'id est bien dans le fichier id.txt
+if grep -q $a id.txt; then
+
+  printf "Email a supprimer : $R\n"
+  mysql -u root -N <<MY_QUERY
+  USE maildb
+  SELECT email FROM virtual_users WHERE id='$a'
+MY_QUERY
+printf "$N"
+mysql -u root <<MY_QUERY
+  USE maildb
+  DELETE FROM virtual_users WHERE id='$a'
+MY_QUERY
+echo "SQL OK"
+echo "SQL check (pour voir si bien été delete) :"
+
+# requete SQL pour afficher les id et emails contenu dans la database
+show=$(mysql -u root -t <<MY_QUERY
+USE maildb
+SELECT id, email AS "Adresse Mail" FROM virtual_users
+ORDER BY id
+MY_QUERY
+)
+printf "$M$show$N\n"
+$(rm id.txt)
+exit 1
+fi
+echo "id not in, try again"
+$(rm id.txt)

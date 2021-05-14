@@ -1,0 +1,79 @@
+#!/bin/bash
+# Script de création d'utilisateur
+
+B="\033[0;34m"
+N="\033[0m"
+M="\033[0;95m"
+
+# demande le Nom
+printf "$M--------------$N\n"
+printf "\033[0;31mNom ?$N\n"
+printf "$M--------------$N\n"
+read a
+nom=$(echo "$a" | awk '{print tolower($0)}')
+
+# demande le Prenom
+printf "$M--------------$N\n"
+printf "\033[0;31mPrenom ?$N\n"
+printf "$M--------------$N\n"
+read b
+prenom=$(echo "$b" | awk '{print tolower($0)}')
+fullname="$nom.$prenom"
+mail="$nom.$prenom@wt2-5.ephec-ti.be"
+
+# demande le Password
+printf "$M--------------$N\n"
+printf "\033[0;31mPassword ?$N\n"
+printf "$M--------------$N\n"
+read -s c
+l=${#c}
+length=$((l-3))
+pass=""
+while [ ${#pass} -lt $length ]
+do
+        pass+="*"
+done
+first="${c::1}"
+last="$(echo "$c" |tail -c 3)"
+printf "\033[0;33mMail$N : $B$mail$N\n"
+printf "\033[0;33mMDP$N : $B$first$pass$last$N\n"
+
+# SQL stocke les ID dans un fichier email.txt
+email=$(mysql -u root -N <<MY_QUERY
+USE maildb
+SELECT email FROM virtual_users
+ORDER BY id
+MY_QUERY
+)
+echo "$email" > email.txt
+
+## Verifie si l'id est bien dans le fichier
+if grep -q $mail email.txt; then
+echo "l'adresse mail alrest déjà assigner, veuillez réessayer"
+$(rm email.txt)
+exit 1
+else
+#Script sql pour ajouter le user
+az='$6$'
+echo "INSERT INTO \`maildb\`.\`virtual_users\`" > script.sql
+echo "(\`id\`, \`domain_id\`, \`password\` , \`email\`, \`maildir\`)" >> script.sql
+echo -e "VALUES" >> script.sql
+echo -e "(\x27\x27, \x271\x27, ENCRYPT(\x27$c\x27, CONCAT(\x27$az\x27, SUBSTRING(SHA(RAND()), -16))), \x27$mail\x27, \x27wt2-5.ephec-ti.be/$fullname/\x27);" >> script.sql
+echo "script.sql created"
+mysql -u root <<MY_QUERY
+SOURCE script.sql
+MY_QUERY
+echo "SQL check (pour voir si bien été add) :"
+sleep 1
+
+# SQL affiche les id et emails de la db
+show=$(mysql -u root -t <<MY_QUERY
+USE maildb
+SELECT id, email AS "Adresse Mail", password AS "Mot de passe Crypté" FROM virtual_users
+ORDER BY id
+MY_QUERY
+)
+printf "$M$show$N\n"
+$(rm email.txt script.sql)
+exit 1
+fi
