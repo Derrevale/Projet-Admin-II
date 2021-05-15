@@ -6,7 +6,7 @@ services:
     container_name: container-apache-woodytoys
     build :
       # directives permettant de pouvoir indiquer au docker-compose où chercher le dockerfile pour l'image du serveur WEB apache
-      context: ./
+      context: ./WEB_vitrine
       dockerfile: www/Dockerfile
     ports:
       # Attribue les ports 80 pour le container WEB
@@ -18,27 +18,38 @@ services:
     links:
       - db
     volumes:
-      - config/sites-available/WoodyToys.conf-B2B.conf
+      - /Web_vitrine/config/sites-available/WoodyToys.conf-B2B.conf
   db:
     # Attribue un nom au container de la base de données MySQL
     container_name: container-mysql-woodytoysdb
     build:
       # directives permettant de pouvoir indiquer au docker-compose où chercher le dockerfile pour l'image de la base de données mysql
-      context: ./DB/mysql
+      context: ./WEB_vitrine/DB/mysql
       dockerfile: Dockerfile
     environment:
       # Créé une base de données, attribue un mot de passe pour le root et utilisateur admin nouvellement créé
       MYSQL_DATABASE : woodytoys_db
-      MYSQL_ROOT_PASSWORD: [ mot de passe root ]
+      MYSQL_ROOT_PASSWORD: [mot de passe root]
       MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: [ mot de passe utilisateur ]
+      MYSQL_PASSWORD: [mot de passe admin]
     restart: always
     # Attribution des ports 3306 pour le service MySQL
     ports:
       - "3306:3306"
     volumes:
       # Commande permettant de pouvoir insérer les données dans la DB depuis un fichier .sql
-      - ./DB/db_woodytoys/db-data:/docker-entrypoint-initdb.d
+      - ./WEB_vitrine/DB/db_woodytoys/db-data:/docker-entrypoint-initdb.d
+  voip:
+    container_name: voipservice
+    build:
+      context: ./VoIP
+      dockerfile: Dockerfile
+    ports:
+      - "5060:5060/tcp"
+      - "5060:5060/udp"
+    networks:
+      dmz_net:
+        ipv4_address: 172.16.0.4
 
 #Création du réseau de la zone DMZ, on y attribue son sous-réseau et sa passerelle par défaut
 networks:
