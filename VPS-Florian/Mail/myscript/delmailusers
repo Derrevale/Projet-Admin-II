@@ -1,23 +1,23 @@
 #!/bin/bash
-# Script de supression d'utilisateur 
 
-
+# Script de suppression d'adress mail dans la db
+# Couleur pour une compréhension B=bleu/N=classique/M=mauve/R=rouge/Y=jaune
 R="\033[0;31m"
 B="\033[0;34m"
-O="\033[0;33m"
+Y="\033[0;33m"
 M="\033[0;95m"
 N="\033[0m"
 
-# SQL affiche les id et emails de la db
+# SQL affiche les id et emails contenu dans la database
 output=$(mysql -u root -t <<MY_QUERY
 USE maildb
 SELECT id, email AS "Adresse Mail" FROM virtual_users
 ORDER BY id
 MY_QUERY
 )
-printf "$O$output$N\n"
+printf "$Y$output$N\n"
 
-# SQL stocke les ID dans le fichier id.txt
+# SQL stocke les ID dans un fichier id.txt
 id=$(mysql -u root -N <<MY_QUERY
 USE maildb
 SELECT id FROM virtual_users
@@ -26,11 +26,11 @@ MY_QUERY
 )
 echo "$id" > id.txt
 
-# Demande a l'utilisateur le mail a supprimer
+# choix de l'adresse à supprimer
 echo "Email a supprimer (Choisir un numéro différent de 0) ?"
 read a
 
-# Verifie si l'id est bien dans le fichier id.txt
+## Verifie si id est bien dans la liste (id.txt)
 if grep -q $a id.txt; then
 
   printf "Email a supprimer : $R\n"
@@ -43,10 +43,9 @@ mysql -u root <<MY_QUERY
   USE maildb
   DELETE FROM virtual_users WHERE id='$a'
 MY_QUERY
-echo "SQL OK"
-echo "SQL check (pour voir si bien été delete) :"
 
-# requete SQL pour afficher les id et emails contenu dans la database
+
+# affiche la liste après l'execution de la commande pour s'assurer de la supression puis supprime id.txt
 show=$(mysql -u root -t <<MY_QUERY
 USE maildb
 SELECT id, email AS "Adresse Mail" FROM virtual_users

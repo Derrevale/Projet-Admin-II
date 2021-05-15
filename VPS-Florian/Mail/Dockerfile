@@ -3,21 +3,27 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 
 # Installation des outils
-RUN apt-get install -y vim nano telnet mutt dnsutils net-tools iputils-ping mailutils
+RUN apt-get install -y vim nano telnet mutt dnsutils net-tools iputils-ping mailutils 
+RUN apt-get install sudo -y
 
-COPY myscript/* /usr/bin/
-RUN chmod +x /usr/bin/addmailuser
-RUN chmod +x /usr/bin/delmailuser
-RUN chmod +x /usr/bin/showmailuser
+
+
 # Génération du certificat SSL
-
 RUN openssl req -new -x509 -days 3650 -nodes -newkey rsa:4096 -out /etc/ssl/certs/mailserver.pem -keyout /etc/ssl/private/mailserver.pem -subj "/C=BE/ST=Braban-wallon/L=Wavre/O=Ephec/OU=IT/CN=mail.l2-5.ephec-ti.be"
 
 # Installation Database
-RUN apt-get install -y mysql-server
+RUN apt update
+RUN apt-get install mariadb-server -y
 
 
-#Configuration - MySQL
+COPY myscript/* /usr/bin/
+RUN chmod +x /usr/bin/addmailusers
+RUN chmod +x /usr/bin/delmailusers
+RUN chmod +x /usr/bin/showmailusers
+RUN chmod +x /usr/bin/readmailadmins
+RUN chmod +x /usr/bin/readmailusers
+
+#Configuration - MariaDB
 
 COPY configuration-sql/create-db.sql config-sql/create-db.sql
 COPY configuration-sql/create-users.sql config-sql/create-users.sql

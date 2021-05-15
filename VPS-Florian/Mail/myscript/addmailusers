@@ -1,29 +1,32 @@
 #!/bin/bash
-# Script de création d'utilisateur
 
+# Ajoute une nouvel adresse mail dans la db
+# Couleur pour une compréhension B=bleu/N=classique/M=mauve/R=rouge/Y=jaune 
 B="\033[0;34m"
 N="\033[0m"
 M="\033[0;95m"
+R="\033[0;31m"
+Y="\033[0;33m"
 
-# demande le Nom
+# demande du nom
 printf "$M--------------$N\n"
-printf "\033[0;31mNom ?$N\n"
+printf "$R Nom ?$N\n"
 printf "$M--------------$N\n"
 read a
 nom=$(echo "$a" | awk '{print tolower($0)}')
 
-# demande le Prenom
+# demande du prenom
 printf "$M--------------$N\n"
-printf "\033[0;31mPrenom ?$N\n"
+printf "$R Prenom ?$N\n"
 printf "$M--------------$N\n"
 read b
 prenom=$(echo "$b" | awk '{print tolower($0)}')
 fullname="$nom.$prenom"
-mail="$nom.$prenom@wt2-5.ephec-ti.be"
+mail="$nom.$prenom@l2-5.ephec-ti.be"
 
-# demande le Password
+# demande du password
 printf "$M--------------$N\n"
-printf "\033[0;31mPassword ?$N\n"
+printf "$R Mot de passe ?$N\n"
 printf "$M--------------$N\n"
 read -s c
 l=${#c}
@@ -35,10 +38,10 @@ do
 done
 first="${c::1}"
 last="$(echo "$c" |tail -c 3)"
-printf "\033[0;33mMail$N : $B$mail$N\n"
-printf "\033[0;33mMDP$N : $B$first$pass$last$N\n"
+printf "$Y Mail$N : $B$mail$N\n"
+printf "$Y MDP$N : $B$first$pass$last$N\n"
 
-# SQL stocke les ID dans un fichier email.txt
+# SQL stocke les ID dans un fichier email.txt pour vérif pas de redondance
 email=$(mysql -u root -N <<MY_QUERY
 USE maildb
 SELECT email FROM virtual_users
@@ -47,26 +50,23 @@ MY_QUERY
 )
 echo "$email" > email.txt
 
-## Verifie si l'id est bien dans le fichier
+## Verifie si l'id est bien là
 if grep -q $mail email.txt; then
-echo "l'adresse mail alrest déjà assigner, veuillez réessayer"
+echo "email already assigned, try again"
 $(rm email.txt)
 exit 1
 else
-#Script sql pour ajouter le user
+# Script d'ajout du nouvel utilisateur
 az='$6$'
 echo "INSERT INTO \`maildb\`.\`virtual_users\`" > script.sql
 echo "(\`id\`, \`domain_id\`, \`password\` , \`email\`, \`maildir\`)" >> script.sql
 echo -e "VALUES" >> script.sql
-echo -e "(\x27\x27, \x271\x27, ENCRYPT(\x27$c\x27, CONCAT(\x27$az\x27, SUBSTRING(SHA(RAND()), -16))), \x27$mail\x27, \x27wt2-5.ephec-ti.be/$fullname/\x27);" >> script.sql
-echo "script.sql created"
+echo -e "('0', '1', ENCRYPT('$c', CONCAT('$az', SUBSTRING(SHA(RAND()), -16))), '$mail', 'l2-5.ephec-ti.be/$fullname/');" >> script.sql
 mysql -u root <<MY_QUERY
 SOURCE script.sql
 MY_QUERY
-echo "SQL check (pour voir si bien été add) :"
-sleep 1
-
-# SQL affiche les id et emails de la db
+*sleep 1
+# Verification si bien dans la DB 
 show=$(mysql -u root -t <<MY_QUERY
 USE maildb
 SELECT id, email AS "Adresse Mail", password AS "Mot de passe Crypté" FROM virtual_users

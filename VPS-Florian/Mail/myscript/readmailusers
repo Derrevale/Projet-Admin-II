@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Lance le client mail les utilisateurs
+
+#Couleur R=rouge / B=bleu / Y=jaune / M=mauve / N=classique 
+R="\033[0;31m"
+B="\033[0;34m"
+Y="\033[0;33m"
+M="\033[0;95m"
+N="\033[0m"
+
+# Nom
+printf "$R Nom : $B"
+read -r a
+printf "$N"
+nom=$(echo "$a" | awk '{print tolower($0)}')
+
+# Prenom
+printf "$R Prenom : $B"
+read -r b
+printf "$N"
+prenom=$(echo "$b" | awk '{print tolower($0)}')
+mail="$nom.$prenom@l2-5.ephec-ti.be"
+
+# Mail + Connection
+printf "Connection au$M serveur mail...$Y Démarrage du client mail...$N\n"
+printf "Votre nom d'utilisateur est : $R$mail$N\n"
+sleep 4
+mutt -f imaps://135.125.101.234:993

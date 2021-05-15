@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#Lance le client mail pour les administrateurs
+# Couleur R=rouge / B=bleu / Y=jaune / N=classique
+R="\033[0;31m"
+B="\033[0;34m"
+Y="\033[0;33m"
+N="\033[0m"
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided"
+    echo "entrer soit sebastien, valentin ou florian"
+    echo "(permet d'acceder aux boites mails)"
+    exit 1
+
+elif [ $1 = "sebastien" ] 
+then
+        if [ -d "/var/mail/vhosts/l2-5.ephec-ti.be/sebastien/" ]
+        then
+                printf "local mail user$B found$N, connecting...\n"
+                sleep 1
+                mutt -f /var/mail/vhosts/l2-5.ephec-ti.be/sebastien/
+        else
+                printf "local mail user$R not found$N, connecting to remote mail server...\n"
+                printf "PS: Your username is :$Y sebastien@l2-5.ephec-ti.be$N\n"
+                sleep 2
+                mutt -f imaps://135.125.101.234:993
+        fi
+
+elif [ $1 = "valentin" ]
+then
+        if [ -d "/var/mail/vhosts/l2-5.ephec-ti.be/valentin/" ]
+        then
+                printf "local mail user$B found$N, connecting...\n"
+                sleep 1
+                mutt -f /var/mail/vhosts/l2-5.ephec-ti.be/valentin/
+        else
+                printf "local mail user$R not found$N, connecting to remote mail server...\n"
+                printf "PS: Your username is :$Y valentin@l2-5.ephec-ti.be$N\n"
+                sleep 2
+                mutt -f imaps://135.125.101.234:993
+        fi
+
+elif [ $1 = "florian" ]
+then
+        if [ -d "/var/mail/vhosts/l2-5.ephec-ti.be/florian/" ]
+        then
+                printf "local mail user$B found$N, connecting...\n"
+                sleep 1
+                mutt -f /var/mail/vhosts/l2-5.ephec-ti.be/florian/
+        else
+                printf "local mail user$R not found$N, connecting to remote mail server...\n"
+                printf "PS: Your username is :$Y florian@l2-5.ephec-ti.be$N\n"
+                sleep 2
+                mutt -f imaps://135.125.101.234:993
+        fi
+fi
