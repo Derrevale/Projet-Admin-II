@@ -31,7 +31,7 @@ services:
       MYSQL_DATABASE : woodytoys_db
       MYSQL_ROOT_PASSWORD: [mot de passe root]
       MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: [mot de passe admin]
+      MYSQL_PASSWORD: [mot de passe root]
     restart: always
     # Attribution des ports 3306 pour le service MySQL
     ports:
