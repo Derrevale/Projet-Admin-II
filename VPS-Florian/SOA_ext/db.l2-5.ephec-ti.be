@@ -1,8 +1,8 @@
-$TTL 604800
+$TTL 86400
 @       IN      SOA     ns.l2-5.ephec-ti.be. v.derreumaux.students.ephec.be. (
                         1           ; Serial
-                        604800      ; Refresh
-                        86400       ; Retry
+                        43200      ; Refresh
+                        7200       ; Retry
                         2419200     ; Expire
                         604800 )    ; Negative Cache TTL
 ;
