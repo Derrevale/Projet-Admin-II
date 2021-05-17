@@ -19,6 +19,8 @@ www         IN      A       135.125.101.237
 mail        IN      A       135.125.101.234
 smtp        IN      CNAME   mail
 
+; SPF
+@           IN	    TXT     "v=spf1 a mx ip4:135.125.101.234 include:_spf.google.com ~all"
 
 ; VoIP
 _sip._udp   SRV     0       0       5060        sip 
