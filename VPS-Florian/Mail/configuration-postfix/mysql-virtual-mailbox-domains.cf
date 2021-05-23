@@ -1,3 +1,4 @@
+#Information de connection a la database pour le domaine virtuel
 user = mailUser
 password = root
 hosts = 127.0.0.1
