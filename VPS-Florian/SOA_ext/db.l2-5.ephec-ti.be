@@ -1,10 +1,10 @@
 $TTL 86400
 @       IN      SOA     ns.l2-5.ephec-ti.be. v.derreumaux.students.ephec.be. (
-                        20211705           ; Serial
+                        2021051752           ; Serial
                         43200      ; Refresh
                         7200       ; Retry
                         2419200     ; Expire
-                        604800 )    ; Negative Cache TTL
+                        86400 )    ; Negative Cache TTL
 ;
 ; NS configs
             IN      NS      ns.l2-5.ephec-ti.be.
