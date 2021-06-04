@@ -17,3 +17,4 @@ ns          IN      A       172.16.1.3
 erp         IN      A       172.16.1.2
 mysql       IN      A       172.16.1.1
 resolveur   IN      A       172.16.1.4
+mail        IN      A       172.16.0.3
