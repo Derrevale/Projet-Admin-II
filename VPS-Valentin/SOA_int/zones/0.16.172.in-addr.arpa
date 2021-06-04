@@ -16,3 +16,4 @@ $TTL 604800
 ; services web
 4               IN      PTR     erp.intranet.l2-5.ephec-ti.be.
 5               IN      PTR     mysql.intranet.l2-5.ephec-ti.be.
+6               IN      PTR     mail.intranet.l2-5.ephec-ti.be
