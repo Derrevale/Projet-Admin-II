@@ -11,6 +11,7 @@ services:
     ports:
       # Attribue les ports 80 pour le container WEB
       - 80:80
+      - 443:443
     networks:
       # Attribue une adresse IP au container WEB appartenant à la zone DMZ
       dmz_net:
