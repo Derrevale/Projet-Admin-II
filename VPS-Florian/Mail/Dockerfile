@@ -75,7 +75,36 @@ RUN chown spamd:spamd /var/log/spamassassin
 COPY configuration-spam/spamassassin /etc/default/spamassassin
 COPY configuration-spam/local.cf /etc/spamassassin/local.cf
 
+#SPF
+RUN apt install postfix-policyd-spf-python
+COPY config-spf-dkim-dmarc/master.cf /etc/postfix/master.cf
+COPY config-spf-dkim-dmarc/main.cf /etc/postfix/main.cf
+
+# Installation de DKIM / DMARC 
+RUN apt-get install opendkim opendkim-tools
+RUN gpasswd -a postfix opendkim
+RUN apt-get install opendmarc
+COPY config-spf-dkim-dmarc/opendkim.conf /etc/opendkim.conf
+RUN mkdir /etc/opendkim
+RUN mkdir /etc/opendkim/keys
+RUN chown -R opendkim:opendkim /etc/opendkim
+RUN chmod go-rw /etc/opendkim/keys
+COPY config-spf-dkim-dmarc/signing.table /etc/opendkim/signing.table
+COPY config-spf-dkim-dmarc/key.table /etc/opendkim/key.table
+COPY config-spf-dkim-dmarc/trusted.hosts /etc/opendkim/trusted.hosts
+RUN mkdir /etc/opendkim/keys/l2-5.ephec-ti.be
+RUN opendkim-genkey -b 2048 -d l2-5.ephec-ti.be -D /etc/opendkim/keys/l2-5.ephec-ti.be -s default -v
+RUN chown opendkim:opendkim /etc/opendkim/keys/l2-5.ephec-ti.be/default.private
+RUN cat /etc/opendkim/keys/l2-5.ephec-ti.be/default.txt
+
+
+
+#Lier postfix et dkim
+
+RUN mkdir /var/spool/postfix/opendkim
+RUN chown opendkim:postfix /var/spool/postfix/opendkim
+
 
 # lance le docker
 
-CMD ["sh", "-c", "service mysql start; mysql -u root < config-sql/create-db.sql; mysql -u root < config-sql/create-users.sql; service postfix start; service spamassassin start; service dovecot start; tail -F /var/log/mail.log"]
+CMD ["sh", "-c", "service mysql start; mysql -u root < config-sql/create-db.sql; mysql -u root < config-sql/create-users.sql; service postfix start; service opendkim start; service spamassassin start; service opendmarc start; service dovecot start; tail -F /var/log/mail.log"]
