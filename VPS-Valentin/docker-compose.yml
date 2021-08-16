@@ -7,7 +7,6 @@ services:
             context: ./Resolver
             dockerfile: Dockerfile
         #dns: 172.16.1.3
-        
         networks: 
             local_net:
                 ipv4_address: 172.16.1.4
@@ -33,18 +32,14 @@ services:
         build: 
             context: ./SOA_int 
             dockerfile: Dockerfile
+
         ports: 
             - "53:53/tcp"
             - "53:53/udp"
         #dns: 172.16.1.3
-        
         networks: 
             local_net:
                 ipv4_address: 172.16.1.3
-        volumes:
-            - ./SOA_int/named.conf:/etc/bind/named.conf
-            - ./SOA_int/zones/intranet.l2-5.ephec-ti.be:/etc/bind/intranet.l2-5.ephec-ti.be
-            - ./SOA_int/zones/0.16.172.in-addr.arpa:/etc/bind/0.16.172.in-addr.arpa
         container_name: soa_interne
 
 
@@ -53,6 +48,7 @@ services:
             context: ./Intranet_ERP/Docker-administration
             dockerfile: Dockerfile
         #dns: 172.16.1.3
+
         networks:
             administration_net:
                 ipv4_address: 172.16.4.2
@@ -63,6 +59,7 @@ services:
             context: ./Intranet_ERP/Docker-commerciaux
             dockerfile: Dockerfile
         #dns: 172.16.1.3
+        
         networks:
             commerciaux_net:
                 ipv4_address: 172.16.3.2
@@ -88,12 +85,55 @@ services:
                 ipv4_address: 172.16.5.2
         container_name: user_atelier1
 
+    web:
+    # Attribue un nom au container du serveur WEB apache
+        container_name: container-apache-woodytoys
+        build :
+      # directives permettant de pouvoir indiquer au docker-compose où chercher le dockerfile pour l'image du serveur WEB apache
+            context: ./WEB_vitrine
+            dockerfile: www/Dockerfile
+        ports:
+      # Attribue les ports 80 pour le container WEB
+            - 80:80
+        networks:
+      # Attribue une adresse IP au container WEB appartenant à la zone DMZ
+            dmz_net:
+                ipv4_address: 172.16.0.5
+        links:
+            - db
+        volumes:
+            - /Web_vitrine/config/sites-available/WoodyToys.conf-B2B.conf
+    db:
+    # Attribue un nom au container de la base de données MySQL
+        container_name: container-mysql-woodytoysdb
+        build:
+      # directives permettant de pouvoir indiquer au docker-compose où chercher le dockerfile pour l'image de la base de données mysql
+            context: ./WEB_vitrine/DB/mysql
+            dockerfile: Dockerfile
+        networks:
+      # Attribue une adresse IP au container WEB appartenant à la zone DMZ
+            local_net:
+                ipv4_address: 172.16.1.7
+        environment:
+      # Créé une base de données, attribue un mot de passe pour le root et utilisateur admin nouvellement créé
+            MYSQL_DATABASE : woodytoys_db
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: 'admin'
+            MYSQL_PASSWORD: root
+        restart: always
+    # Attribution des ports 3306 pour le service MySQL
+        ports:
+          - "3306:3306"
+        volumes:
+      # Commande permettant de pouvoir insérer les données dans la DB depuis un fichier .sql
+        - ./WEB_vitrine/DB/db_woodytoys/db-data:/docker-entrypoint-initdb.d
+
 ##############################################
 ##       Docker Networks Configuration      ##
 ##############################################
 
-networks:
-
+networks:                          
+        
     local_net:
         ipam:
             driver: default
@@ -135,3 +175,5 @@ networks:
             config:
                 - subnet: 172.16.0.0/24
                   gateway: 172.16.0.1
+
+
