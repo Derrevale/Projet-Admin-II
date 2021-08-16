@@ -18,7 +18,7 @@
     
 </form>
 <?php
-    $bdd = new PDO('mysql:host=135.125.101.237;dbname=woodytoys_db;charset=utf8', 'root', 'root');
+    $bdd = new PDO('mysql:host=51.91.79.172;dbname=woodytoys_db;charset=utf8', 'root', 'root');
     $rep = $bdd->query("SELECT * FROM Fournisseurs");
 
     while($donneesFournisseur = $rep->fetch())
