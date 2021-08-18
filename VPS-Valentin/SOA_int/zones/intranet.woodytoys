@@ -1,3 +1,4 @@
+$ORIGIN intranet.woodytoys.
 $TTL 604800
 @       IN      SOA     ns.intranet.woodytoys. f.degives.students.ephec.be. (
                         1           ; Serial
@@ -6,15 +7,20 @@ $TTL 604800
                         2419200     ; Expire
                         604800 )    ; Negative Cache TTL
 ;
-; name servers => RR => NS
-            IN      NS      ns.intranet.woodytoys
+; name servers => RR de type NS
+            IN      NS      ns.intranet.woodytoys.
 
-; NS de type A
+; name servers => RR de type A
 ns          IN      A       172.16.1.3
 
 ; services web
-
+www         IN      A       172.16.1.2
 mysql       IN      A       172.16.1.1
-erp         IN      A       172.16.1.2
-resolver    IN      A       172.16.1.4
+resolveur   IN      A       172.16.1.4
+
+
+; externes
+mail        IN      A       172.16.0.3
+voip        IN      A       172.16.0.4
+ext         IN      A       172.16.0.1
 
