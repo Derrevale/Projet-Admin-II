@@ -6,8 +6,12 @@ RUN apt-get install -y iputils-ping
 RUN apt-get install -y dnsutils
 RUN apt-get install -y lynx
 RUN apt-get install -y net-tools
-RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN apt-get install nano
+
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+
 COPY intranet/index.php /var/www/html/index.php
 COPY intranet/intranet.conf /etc/apache2/sites-available/intranet.conf
 
