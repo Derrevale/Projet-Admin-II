@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt-get update -y
 
+RUN apt-get update -y
+RUN apt-get install -y lynx
 RUN apt-get install -y mutt
 RUN apt-get install -y dnsutils
 RUN apt-get install -y iputils-ping
