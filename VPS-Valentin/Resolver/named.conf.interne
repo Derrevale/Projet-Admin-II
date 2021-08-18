@@ -1,0 +1,16 @@
+acl woodytoys {
+
+        127.0.0.0/8;
+        172.16.0.0/16;
+
+};
+
+view internal {
+        match-clients { woodytoys; };
+    recursion yes;
+    allow-recursion { woodytoys; };
+    zone "intranet.woodytoys" IN {
+        type master;
+        file "/etc/bind/zones/intranet.woodytoys";
+    };
+};

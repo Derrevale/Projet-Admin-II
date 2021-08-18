@@ -1,0 +1,16 @@
+
+
+view external {
+    match-clients { any; };
+    allow-query {any;};
+    zone "l2-5.ephec-ti.be" {
+        type master;
+        file "/etc/bind/zones/db.l2-5.ephec-ti.be";
+    };
+};
+
+
+
+
+
+

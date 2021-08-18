@@ -1,8 +1,15 @@
 FROM ubuntu:latest
 
-RUN apt update && apt upgrade -y && apt install bind9 bind9utils -y && apt-get update && apt-get install iputils-ping
+RUN apt-get update -y && apt-get upgrade && apt install bind9 bind9utils bind9-doc bind9-host dnsutils -y 
 RUN apt-get install -y vim 
 RUN apt-get install -y nano
+RUN apt-get install -y iputils-ping
+RUN apt-get install -y lynx
+RUN apt-get install -y curl
+RUN apt-get install -y mutt
+RUN apt-get install -y dnsutils
+RUN apt-get install -y net-tools
+
 
 WORKDIR /etc/bind
 
